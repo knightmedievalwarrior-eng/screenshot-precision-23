@@ -1,0 +1,6 @@
+import { CalendarDays, FlaskConical } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useDorm } from './dorm-provider';
+export function MonthControl(){const {month,setMonth}=useDorm();const [year='2026',m='11']=month.split('-');return <label className="month-control"><CalendarDays/><select aria-label="เดือนที่ออกบิล" value={m} onChange={e=>setMonth(`${year}-${e.target.value}`)}>{['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'].map((label,i)=><option key={label} value={String(i+1).padStart(2,'0')}>{label}</option>)}</select><input aria-label="ปี พ.ศ. ที่ออกบิล" type="number" min="2500" max="2700" value={Number(year)+543} onChange={e=>{const n=Number(e.target.value);if(n>=2500&&n<=2700)setMonth(`${n-543}-${m}`);}}/></label>;}
+export function DemoBanner(){const {data,setData}=useDorm();if(!data.demo)return null;return <div className="demo-banner"><span><FlaskConical size={15} className="inline mr-2"/>ข้อมูลตัวอย่าง 10 ห้อง · ทดลองดูบิลได้ โดยไม่ใช้สิทธิ์รุ่นฟรี</span><Button variant="ghost" onClick={()=>setData(d=>({...d,rooms:[],readings:{},invoices:[],demo:false}))}>เริ่มใช้ข้อมูลจริง</Button></div>;}
+export const statusLabel={pending:'รอชำระ',paid:'จ่ายแล้ว',overdue:'เกินกำหนด'};
